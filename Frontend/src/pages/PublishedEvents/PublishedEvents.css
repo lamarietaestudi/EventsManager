@@ -1,0 +1,144 @@
+.newEvent-button {
+  background-color: var(--button-background-secondary);
+  color: var(--text-button-secondary);
+  font-family: var(--font-family-buttons);
+  font-size: var(--fontsize-buttons);
+  border: none;
+  border-radius: var(--border-radius-buttons);
+  padding: var(--padding-s) var(--padding-m);
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+  width: 20%;
+}
+
+.newEvent-button:hover {
+  background-color: var(--button-background-secondary-hover);
+  color: var(--text-button-primary);
+}
+
+.published-events-container {
+  width: 100%;
+  max-width: 1200px;
+  background-color: var(--main-background);
+  gap: var(--gap-s);
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  background-color: var(--card-background);
+  border-radius: var(--border-radius-cards);
+  box-shadow: 0 4px 8px var(--card-shadow);
+  padding: var(--padding-m);
+  margin-bottom: var(--gap-s);
+}
+
+.event-poster {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--border-radius-cards);
+  border: 1px solid var(--text-event-title);
+}
+
+.event-info {
+  width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.event-head {
+  display: flex;
+  justify-content: auto;
+  align-items: center;
+  width: 100%;
+  margin-bottom: var(--margin-xs);
+}
+
+.event-title {
+  font-family: var(--font-family-title);
+  font-size: var(--fontsize-title);
+  color: var(--text-event-title);
+  text-align: left;
+}
+
+.event-controls {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--gap-s);
+}
+
+.edit-button,
+.delete-button {
+  font-family: var(--font-family-buttons);
+  font-size: var(--fontsize-buttons);
+  border: none;
+  border-radius: var(--border-radius-buttons);
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+}
+
+.edit-button {
+  background-color: var(--button-background-primary);
+  color: var(--text-button-primary);
+}
+
+.edit-button:hover {
+  background-color: var(--button-background-primary-hover);
+}
+
+.delete-button {
+  background-color: var(--error-color);
+  color: var(--text-basic-light);
+}
+
+.delete-button:hover {
+  background-color: var(--error-color-hover);
+}
+
+.input-editable {
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-input);
+}
+
+.edit-poster-input {
+  display: block;
+  margin-top: var(--margin-xs);
+  font-size: var(--fontsize-text);
+}
+
+.event-text {
+  font-family: var(--font-family-text);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--text-basic-dark);
+  margin-bottom: var(--margin-xs);
+  text-align: left;
+  width: 100%;
+}
+
+.editable {
+  border: 1px solid #ccc;
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-input);
+}
+
+.event-message {
+  text-align: center;
+  font-family: var(--font-family-text);
+  font-size: var(--fontsize-text);
+  margin-top: var(--margin-s);
+}
+
+.event-message.success {
+  color: var(--success-color);
+}
+
+.event-message.error {
+  color: var(--error-color);
+}

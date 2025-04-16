@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --font-family-title: 'Tomorrow', sans-serif;
+  --font-family-text: 'Kanit', sans-serif;
+  --font-family-buttons: 'Work Sans', sans-serif;
+
+  --font-size-nav-links: 20px;
+  --fontsize-title: 28px;
+  --fontsize-title-form: 20px;
+  --fontsize-text: 16px;
+  --fontsize-buttons: 14px;
+
+  --text-basic-light: #ffffff;
+  --text-basic-dark: #1f1f1f;
+  --text-event-title: #ff9800;
+  --text-button-primary: #171717;
+  --text-button-secondary: #ffffff;
+  --text-button-disabled: #888888;
+  --text-button-neutral: #1b1b1b;
+  --text-form-login: #171717;
+
+  --header-background: #1c1c1c;
+  --main-background: #b9b9b9;
+  --footer-background: #fafafa;
+
+  --form-background-login: #f5ecdf;
+
+  --button-background-primary: #ff9800;
+  --button-background-primary-hover: #ffc671;
+  --button-background-secondary: #6a1b9a;
+  --button-background-secondary-hover: #9c85aa;
+  --button-background-disabled: #dbdbdb;
+  --button-background-neutral: #dfdfdf;
+
+  --card-background: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+
+  --success-color: #2e7d32;
+  --error-color: #d32f2f;
+  --warning-color: #ff9800;
+
+  --margin-xl: 40px;
+  --margin-l: 30px;
+  --margin-m: 20px;
+  --margin-s: 15px;
+  --margin-xs: 10px;
+
+  --padding-xl: 40px;
+  --padding-l: 30px;
+  --padding-m: 20px;
+  --padding-s: 15px;
+  --padding-xs: 10px;
+
+  --gap-xl: 40px;
+  --gap-l: 30px;
+  --gap-m: 20px;
+  --gap-s: 15px;
+  --gap-xs: 10px;
+
+  --border-radius-cards: 8px;
+  --border-radius-alerts: 15px;
+  --border-radius-buttons: 6px;
+  --transition-speed: 0.3s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: 'Tomorrow', sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: var(--padding-s);
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--main-background);
+}

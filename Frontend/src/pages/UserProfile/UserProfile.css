@@ -1,0 +1,126 @@
+#profilePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: var(--padding-l);
+  background-color: var(--text-basic-light);
+  border-radius: var(--border-radius-cards);
+  box-shadow: 0 2px 4px var(--card-shadow);
+  width: 50vw;
+  max-width: 600px;
+}
+
+.form-label {
+  font-family: var(--font-family-text);
+  font-size: var(--fontsize-text);
+  color: var(--button-background-secondary);
+  display: block;
+}
+
+.event-title {
+  font-family: var(--font-family-text);
+  font-size: var(--fontsize-text);
+  color: var(--text-basic-dark);
+}
+
+.form-input {
+  font-family: var(--font-family-text);
+  font-size: var(--fontsize-text);
+  color: var(--text-basic-dark);
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-buttons);
+  margin-bottom: var(--margin-xs);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input:disabled {
+  background-color: var(--button-background-disabled);
+  color: var(--text-button-disabled);
+  cursor: not-allowed;
+}
+
+.editable {
+  border-color: var(--button-background-neutral);
+}
+
+.form-button {
+  font-family: var(--font-family-buttons);
+  font-size: var(--fontsize-buttons);
+  border: none;
+  border-radius: var(--border-radius-buttons);
+  padding: var(--padding-s) var(--padding-m);
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: var(--margin-s);
+}
+
+.form-button.primary {
+  background-color: var(--button-background-primary);
+  color: var(--text-button-primary);
+}
+
+.form-button.primary:hover {
+  background-color: var(--button-background-primary-hover);
+}
+
+.logout-button {
+  font-family: var(--font-family-buttons);
+  font-size: var(--fontsize-buttons);
+  color: var(--text-button-secondary);
+  background-color: var(--button-background-secondary);
+  border: none;
+  border-radius: var(--border-radius-buttons);
+  padding: var(--padding-s) var(--padding-m);
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: var(--margin-xs);
+}
+
+.logout-button:hover {
+  background-color: var(--button-background-secondary-hover);
+  color: var(--text-button-primary);
+}
+
+.delete-button {
+  font-family: var(--font-family-buttons);
+  font-size: var(--fontsize-buttons);
+  color: var(--error-color);
+  background-color: #ffcdd2;
+  border: 1px solid var(--error-color);
+  border-radius: var(--border-radius-buttons);
+  padding: var(--padding-s) var(--padding-m);
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.delete-button:hover {
+  background-color: #ef9a9a;
+}
+
+.separator {
+  border: 1px solid #ccc;
+  margin: var(--margin-m) 0;
+}
+
+.profile-message {
+  text-align: center;
+  font-family: var(--font-family-text);
+  font-size: var(--fontsize-text);
+  margin-top: var(--margin-s);
+}
+
+.profile-message.success {
+  color: var(--success-color);
+}
+
+.profile-message.error {
+  color: var(--error-color);
+}
