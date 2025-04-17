@@ -1,0 +1,27 @@
+.confirm-message {
+  text-align: center;
+  font-family: var(--font-family-text);
+  font-size: var(--fontsize-text);
+  margin-top: var(--margin-s);
+  padding: var(--padding-xs) var(--padding-s);
+  border-radius: var(--border-radius-buttons);
+  color: var(--text-basic-light);
+}
+
+.confirm-message-success {
+  background-color: var(--success-color);
+  border-radius: var(--border-radius-buttons);
+  padding: var(--padding-xs) var(--padding-s);
+  color: var(--text-basic-light);
+}
+
+.confirm-message-failed {
+  background-color: var(--error-color);
+  border-radius: var(--border-radius-buttons);
+  padding: var(--padding-xs) var(--padding-s);
+  color: var(--text-basic-light);
+}
+
+.disabled {
+  display: none;
+}

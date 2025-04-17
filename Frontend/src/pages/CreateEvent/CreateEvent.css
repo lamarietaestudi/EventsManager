@@ -1,64 +1,11 @@
-.create-event-label {
-  font-family: var(--font-family-text);
-  font-size: var(--fontsize-text);
-  color: var(--button-background-secondary);
-  display: block;
-  margin-bottom: var(--margin-xxs);
-}
-
-.create-event-input,
-.create-event-textarea {
-  font-family: var(--font-family-text);
-  font-size: var(--fontsize-text);
-  color: var(--text-basic-dark);
-  padding: var(--padding-xs);
-  border-radius: var(--border-radius-buttons);
-  margin-bottom: var(--margin-s);
+#create-event-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+  padding: var(--padding-l);
+  background-color: var(--text-basic-light);
+  border-radius: var(--border-radius-cards);
+  box-shadow: 0 2px 4px var(--card-shadow);
   width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-}
-
-.create-event-button {
-  font-family: var(--font-family-buttons);
-  font-size: var(--fontsize-buttons);
-  border: none;
-  border-radius: var(--border-radius-buttons);
-  padding: var(--padding-s) var(--padding-m);
-  cursor: pointer;
-  transition: background-color var(--transition-speed) ease,
-    color var(--transition-speed) ease;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: var(--margin-s);
-}
-
-.create-event-button.primary {
-  background-color: var(--button-background-primary);
-  color: var(--text-button-primary);
-}
-
-.create-event-button.primary:hover {
-  background-color: var(--button-background-primary-hover);
-}
-
-.create-event-message {
-  text-align: center;
-  font-family: var(--font-family-text);
-  font-size: var(--fontsize-text);
-  margin-top: var(--margin-s);
-}
-
-.create-event-message.success {
-  background-color: var(--success-color);
-  border-radius: var(--border-radius-buttons);
-  padding: var(--padding-xs) var(--padding-s);
-  color: var(--text-basic-light);
-}
-
-.create-event-message.error {
-  background-color: var(--error-color);
-  border-radius: var(--border-radius-buttons);
-  padding: var(--padding-xs) var(--padding-s);
-  color: var(--text-basic-light);
+  max-width: 600px;
 }

@@ -1,0 +1,16 @@
+.loading-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  top: 0;
+  position: fixed;
+  height: 65px;
+  background-color: var(--loading-background-color);
+  color: var(--text-loading-color);
+  text-align: center;
+  font-size: var(--fontsize-text);
+  font-family: var(--font-family-text);
+  padding: var(--padding-s);
+  z-index: 1000;
+}

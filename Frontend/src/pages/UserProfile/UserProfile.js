@@ -1,34 +1,42 @@
 import './UserProfile.css';
 import { Header } from '../../components/Header/Header';
+import { Home } from '../Home/Home';
+import { createForm } from '../../components/Forms/Forms';
+import { createButton } from '../../components/Buttons/Buttons';
+import { ConfirmMessage } from '../../components/ConfirmMessages/ConfirmMessages';
+import { Loading } from '../../components/Loading/Loading';
 
 export const UserProfile = async () => {
   const main = document.querySelector('main');
   main.innerHTML = ``;
 
-  const profilePanel = document.createElement('div');
-  profilePanel.id = 'profilePanel';
+  const profileContainer = document.createElement('div');
+  profileContainer.id = 'profileContainer';
 
   const user = JSON.parse(localStorage.getItem('user'));
 
-  const labelEmail = document.createElement('label');
-  labelEmail.textContent = 'Email';
-  labelEmail.classList.add('form-label');
+  const form = createForm([
+    {
+      label: 'Email',
+      type: 'email',
+      name: 'email',
+      placeholder: 'Tu correo electrónico',
+      value: user.email,
+      required: true,
+      disabled: true
+    },
+    {
+      label: 'Contraseña',
+      type: 'password',
+      name: 'password',
+      placeholder: '**********',
+      value: '**********',
+      required: false,
+      disabled: true
+    }
+  ]);
 
-  const inputEmail = document.createElement('input');
-  inputEmail.type = 'email';
-  inputEmail.value = user.email;
-  inputEmail.disabled = true;
-  inputEmail.classList.add('form-input');
-
-  const labelPassword = document.createElement('label');
-  labelPassword.textContent = 'Contraseña';
-  labelPassword.classList.add('form-label');
-
-  const inputPassword = document.createElement('input');
-  inputPassword.type = 'password';
-  inputPassword.value = '**********';
-  inputPassword.disabled = true;
-  inputPassword.classList.add('form-input');
+  profileContainer.appendChild(form);
 
   const labelFavorites = document.createElement('label');
   labelFavorites.textContent = 'Mis eventos favoritos';
@@ -58,128 +66,127 @@ export const UserProfile = async () => {
 
   renderFavoriteList(user.favoriteEvents);
 
-  const editSaveButton = document.createElement('button');
-  editSaveButton.textContent = 'Editar';
-  editSaveButton.classList.add('form-button', 'primary');
-
-  const logoutButton = document.createElement('button');
-  logoutButton.textContent = 'Cerrar sesión';
-  logoutButton.classList.add('logout-button');
-
-  const separator = document.createElement('hr');
-  separator.classList.add('separator');
-
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Eliminar cuenta';
-  deleteButton.classList.add('delete-button');
-
-  const message = document.createElement('p');
-  message.classList.add('profile-message');
-  message.textContent = '';
-
   let isEditing = false;
 
-  editSaveButton.addEventListener('click', async () => {
+  const editSaveButton = createButton('Editar', 'btn btn-primary', async () => {
     isEditing = !isEditing;
+    const emailInput = form.querySelector('[name="email"]');
+    const passwordInput = form.querySelector('[name="password"]');
+
     if (isEditing) {
       editSaveButton.textContent = 'Guardar cambios';
-      inputEmail.disabled = false;
-      inputPassword.disabled = false;
-      inputEmail.classList.add('editable');
-      inputPassword.classList.add('editable');
-      message.textContent = '';
+      emailInput.disabled = false;
+      passwordInput.disabled = false;
+      emailInput.classList.add('editable');
+      passwordInput.classList.add('editable');
     } else {
       const token = localStorage.getItem('token');
       const userId = user._id;
 
       const updateData = {
-        email: inputEmail.value
+        email: emailInput.value
       };
 
       if (
-        inputPassword.value.trim() !== '' &&
-        inputPassword.value !== '**********'
+        passwordInput.value.trim() !== '' &&
+        passwordInput.value !== '**********'
       ) {
-        updateData.password = inputPassword.value;
+        updateData.password = passwordInput.value;
+      }
+      const removeLoader = Loading(profileContainer);
+
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/v1/users/${userId}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(updateData)
+          }
+        );
+
+        if (res.ok) {
+          const updatedUser = await res.json();
+          delete updatedUser.password;
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          const message = ConfirmMessage(
+            'success',
+            'Cambios guardados correctamente.'
+          );
+          profileContainer.appendChild(message);
+        } else {
+          const message = ConfirmMessage(
+            'failed',
+            'Error al guardar los cambios.'
+          );
+          profileContainer.appendChild(message);
+        }
+      } finally {
+        removeLoader();
       }
 
-      const res = await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(updateData)
-      });
-
-      if (res.ok) {
-        const updatedUser = await res.json();
-        delete updatedUser.password;
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-        message.textContent = 'Cambios guardados correctamente.';
-        message.classList.remove('error');
-        message.classList.add('success');
-        inputEmail.disabled = true;
-        inputPassword.disabled = true;
-        inputEmail.classList.remove('editable');
-        inputPassword.classList.remove('editable');
-      } else {
-        message.textContent = 'Error al guardar los cambios.';
-        message.classList.remove('success');
-        message.classList.add('error');
-      }
       editSaveButton.textContent = 'Editar';
     }
   });
 
-  logoutButton.addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = '/';
-  });
+  const logoutButton = createButton(
+    'Cerrar sesión',
+    'btn btn-secondary',
+    () => {
+      localStorage.clear();
+      window.location.href = '/';
+    }
+  );
 
-  deleteButton.addEventListener('click', async () => {
-    const confirmDelete = confirm(
-      '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
-    );
-
-    if (confirmDelete) {
-      const userId = user._id;
-      const token = localStorage.getItem('token');
-
-      const res = await fetch(
-        `http://localhost:3000/api/v1/users/delete/${userId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+  const deleteButton = createButton(
+    'Eliminar cuenta',
+    'btn btn-delete',
+    async () => {
+      const confirmDelete = confirm(
+        '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
       );
 
-      if (res.ok) {
-        localStorage.clear();
-        alert('Cuenta eliminada con éxito');
-        Header();
-        Home();
-      } else {
-        alert('Hubo un error al eliminar tu cuenta');
+      if (confirmDelete) {
+        const userId = user._id;
+        const token = localStorage.getItem('token');
+
+        const res = await fetch(
+          `http://localhost:3000/api/v1/users/delete/${userId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        if (res.ok) {
+          localStorage.clear();
+          alert('Cuenta eliminada con éxito');
+          Header();
+          Home();
+        } else {
+          alert('Hubo un error al eliminar tu cuenta');
+        }
       }
     }
-  });
+  );
 
-  profilePanel.append(
-    labelEmail,
-    inputEmail,
-    labelPassword,
-    inputPassword,
+  const separator = document.createElement('hr');
+  separator.classList.add('separator');
+
+  profileContainer.append(
+    form,
+    editSaveButton,
     labelFavorites,
     favoriteList,
-    editSaveButton,
-    message,
     logoutButton,
     separator,
     deleteButton
   );
 
-  main.append(profilePanel);
+  main.append(profileContainer);
 };

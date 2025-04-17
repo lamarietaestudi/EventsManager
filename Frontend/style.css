@@ -12,6 +12,8 @@
   --fontsize-title-form: 20px;
   --fontsize-text: 16px;
   --fontsize-buttons: 14px;
+  --fontsize-label: 16px;
+  --fontsize-input: 16px;
 
   --text-basic-light: #ffffff;
   --text-basic-dark: #1f1f1f;
@@ -20,13 +22,15 @@
   --text-button-secondary: #ffffff;
   --text-button-disabled: #888888;
   --text-button-neutral: #1b1b1b;
+  --text-button-delete: #d32f2f;
   --text-form-login: #171717;
+  --text-loading-color: #ffffff;
 
   --header-background: #1c1c1c;
   --main-background: #b9b9b9;
   --footer-background: #fafafa;
-
   --form-background-login: #f5ecdf;
+  --loading-background-color: #6a1b9a;
 
   --button-background-primary: #ff9800;
   --button-background-primary-hover: #ffc671;
@@ -34,13 +38,15 @@
   --button-background-secondary-hover: #9c85aa;
   --button-background-disabled: #dbdbdb;
   --button-background-neutral: #dfdfdf;
+  --button-background-neutral-hover: #8d8d8d;
+  --button-background-delete: #e0bdbd;
+  --button-background-delete-hover: #d64646;
 
   --card-background: #ffffff;
-  --card-shadow: rgba(0, 0, 0, 0.1);
+  --card-shadow: #0000001a;
 
   --success-color: #2e7d32;
   --error-color: #d32f2f;
-  --warning-color: #ff9800;
 
   --margin-xl: 40px;
   --margin-l: 30px;
@@ -63,6 +69,11 @@
   --border-radius-cards: 8px;
   --border-radius-alerts: 15px;
   --border-radius-buttons: 6px;
+
+  --border-radius-inputs: 6px;
+  --border-color-inputs: #888888;
+  --border-color-inputs-focus: #555353;
+
   --transition-speed: 0.3s;
 }
 

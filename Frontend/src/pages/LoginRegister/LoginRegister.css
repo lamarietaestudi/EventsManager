@@ -1,70 +1,18 @@
 #LogReg-container {
-  background-color: var(--form-background-login);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: var(--gap-m);
   padding: var(--padding-l);
-  margin-top: var(--margin-l);
-  width: 100%;
-  max-width: 400px;
+  background-color: var(--text-basic-light);
   border-radius: var(--border-radius-cards);
-  box-shadow: 0 4px 8px var(--card-shadow);
-}
-
-#LogReg-container form {
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 2px 4px var(--card-shadow);
   width: 100%;
-  gap: var(--gap-s);
-}
-
-.form-label {
-  font-size: var(--fontsize-text);
-  font-family: var(--font-family-text);
-  color: var(--text-form-login);
-}
-
-.form-input {
-  padding: var(--padding-xs);
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius-buttons);
-  font-size: var(--fontsize-text);
-  font-family: var(--font-family-text);
-}
-
-.form-button {
-  padding: var(--padding-xs) var(--padding-m);
-  margin-top: var(--margin-m);
-  background-color: var(--button-background-primary);
-  color: var(--text-button-primary);
-  font-size: var(--fontsize-buttons);
-  font-family: var(--font-family-buttons);
-  border: none;
-  border-radius: var(--border-radius-buttons);
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
-}
-
-.form-button:hover {
-  background-color: var(--button-background-secondary);
-  color: var(--text-button-secondary);
+  max-width: 600px;
 }
 
 .form-info {
   font-size: var(--fontsize-buttons);
   font-family: var(--font-family-text);
   color: var(--text-button-neutral);
-
-  text-align: center;
-}
-
-.form-error {
-  background-color: #f8d7da;
-  color: var(--error-color);
-  border: 1px solid var(--error-color);
-  border-radius: var(--border-radius-alerts);
-  padding: 5px 0px;
-  font-size: var(--fontsize-buttons);
-  font-family: var(--font-family-text);
   text-align: center;
 }

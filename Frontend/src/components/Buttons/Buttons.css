@@ -1,0 +1,53 @@
+.btn {
+  padding: var(--padding-xs) var(--padding-m);
+  font-size: var(--fontsize-buttons);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center;
+  min-width: 100%;
+}
+
+.btn-primary {
+  background-color: var(--button-background-primary);
+  color: var(--text-button-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--button-background-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--button-background-secondary);
+  color: var(--text-button-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--button-background-secondary-hover);
+  color: var(--button-background-secondary);
+}
+
+.btn-neutral {
+  background-color: var(--button-background-neutral);
+  color: var(--text-button-neutral);
+}
+
+.btn-neutral:hover {
+  background-color: var(--button-background-neutral-hover);
+}
+
+.btn-disabled {
+  background-color: var(--button-background-disabled);
+  color: var(--text-button-disabled);
+}
+
+.btn-delete {
+  background-color: var(--button-background-delete);
+  color: var(--text-button-delete);
+}
+
+.btn-delete:hover {
+  background-color: var(--button-background-delete-hover);
+  color: var(--button-background-delete);
+}

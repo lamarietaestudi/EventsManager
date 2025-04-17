@@ -1,6 +1,10 @@
 import './LoginRegister.css';
 import { Home } from '../Home/Home.js';
 import { Header } from '../../components/Header/Header.js';
+import { createForm } from '../../components/Forms/Forms.js';
+import { createButton } from '../../components/Buttons/Buttons.js';
+import { ConfirmMessage } from '../../components/ConfirmMessages/ConfirmMessages.js';
+import { Loading } from '../../components/Loading/Loading.js';
 
 export const LoginRegister = () => {
   const main = document.querySelector('main');
@@ -14,49 +18,37 @@ export const LoginRegister = () => {
 };
 
 const Login = (formContainer) => {
-  const form = document.createElement('form');
+  const form = createForm([
+    {
+      label: 'Email',
+      type: 'text',
+      name: 'email',
+      placeholder: 'Escribe tu email',
+      required: true
+    },
+    {
+      label: 'Contraseña',
+      type: 'password',
+      name: 'password',
+      placeholder: 'Escribe tu contraseña',
+      required: true
+    }
+  ]);
 
-  const inputEmail = document.createElement('input');
-  inputEmail.type = 'text';
-  inputEmail.placeholder = 'Escribe tu email';
-  inputEmail.classList.add('form-input');
-
-  const labelEmail = document.createElement('label');
-  labelEmail.textContent = 'Email';
-  labelEmail.classList.add('form-label');
-
-  const inputPassword = document.createElement('input');
-  inputPassword.type = 'password';
-  inputPassword.placeholder = 'Escribe tu contraseña';
-  inputPassword.classList.add('form-input');
-
-  const labelPassword = document.createElement('label');
-  labelPassword.textContent = 'Contraseña';
-  labelPassword.classList.add('form-label');
-
-  const formButton = document.createElement('button');
-  formButton.type = 'submit';
-  formButton.textContent = 'Acceder';
-  formButton.classList.add('form-button');
+  const formButton = createButton('Acceder', 'btn btn-primary', (event) => {
+    event.preventDefault();
+    const email = form.querySelector('[name="email"]').value;
+    const password = form.querySelector('[name="password"]').value;
+    SubmitEvent(email, password, form);
+  });
 
   const infoText = document.createElement('p');
   infoText.textContent =
-    'Si no tienes cuenta no te preocupes, se creará automáticamente al hacer clic en "Acceder".';
+    'Si no tienes cuenta no te preocupes, se creará automáticamente al clicar en "Acceder".';
   infoText.classList.add('form-info');
 
-  form.append(
-    labelEmail,
-    inputEmail,
-    labelPassword,
-    inputPassword,
-    formButton,
-    infoText
-  );
+  form.append(formButton, infoText);
   formContainer.append(form);
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    SubmitEvent(inputEmail.value, inputPassword.value, form);
-  });
 };
 
 const SubmitEvent = async (email, password, form) => {
@@ -65,6 +57,13 @@ const SubmitEvent = async (email, password, form) => {
     body: JSON.stringify({ email, password }),
     headers: { 'content-type': 'application/json' }
   };
+
+  const existingMessage = form.querySelector('.confirm-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+
+  const removeLoader = Loading(document.querySelector('main'));
 
   try {
     const res = await fetch(
@@ -82,9 +81,12 @@ const SubmitEvent = async (email, password, form) => {
       throw new Error(response.message);
     }
   } catch (error) {
-    const SubmitError = document.createElement('p');
-    SubmitError.textContent = error.message || 'Error en autenticación';
-    SubmitError.classList.add('form-error');
-    form.append(SubmitError);
+    const message = ConfirmMessage(
+      'failed',
+      error.message || 'Error en autenticación'
+    );
+    form.append(message);
+  } finally {
+    removeLoader();
   }
 };
