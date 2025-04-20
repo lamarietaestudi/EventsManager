@@ -1,6 +1,6 @@
 import { toggleFavoriteEvent } from './toggleFavoriteEvent';
 import { toggleAssistance } from './toggleAssistance';
-import { updateAssistants } from './updateAssistants';
+import { updateVisitors } from './updateVisitors';
 
 export const printEvents = (
   events,
@@ -46,14 +46,22 @@ export const printEvents = (
         toggleFavoriteEvent(event._id, likeEvent)
       );
       eventHead.append(likeEvent);
+    }
 
-      const assistanceContainer = document.createElement('div');
-      assistanceContainer.classList.add('assistance-container');
+    const eventLocation = document.createElement('p');
+    eventLocation.textContent = event.location;
+    eventLocation.classList.add('event-text');
 
+    const eventDescription = document.createElement('p');
+    eventDescription.textContent = event.description;
+    eventDescription.classList.add('event-text');
+
+    const assistanceContainer = document.createElement('div');
+    assistanceContainer.classList.add('assistance-container');
+
+    if (user) {
       const assistanceList = document.createElement('div');
       assistanceList.classList.add('assistance-list');
-
-      updateAssistants(event._id, token, user, assistToEvents, assistanceList);
 
       const assistanceConfirmation = document.createElement('div');
       assistanceConfirmation.classList.add('assistance-confirmation');
@@ -70,27 +78,17 @@ export const printEvents = (
       assistanceConfirmation.append(assistanceLabel, assistanceCheck);
       assistanceContainer.append(assistanceList, assistanceConfirmation);
 
-      toggleAssistance(
-        assistanceCheck,
-        event._id,
-        user,
-        token,
-        assistToEvents,
-        assistanceList
-      );
+      toggleAssistance(assistanceCheck, event._id, user, token, assistanceList);
 
-      eventInfo.append(assistanceContainer);
+      updateVisitors(event._id, token, assistanceList);
     }
 
-    const eventLocation = document.createElement('p');
-    eventLocation.textContent = event.location;
-    eventLocation.classList.add('event-text');
-
-    const eventDescription = document.createElement('p');
-    eventDescription.textContent = event.description;
-    eventDescription.classList.add('event-text');
-
-    eventInfo.append(eventHead, eventLocation, eventDescription);
+    eventInfo.append(
+      eventHead,
+      eventLocation,
+      eventDescription,
+      assistanceContainer
+    );
     eventCard.append(eventPoster, eventInfo);
     eventsContainer.appendChild(eventCard);
   });

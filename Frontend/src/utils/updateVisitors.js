@@ -1,10 +1,4 @@
-export const updateAssistants = async (
-  eventId,
-  token,
-  user,
-  assistToEvents,
-  assistanceList
-) => {
+export const updateVisitors = async (eventId, token, assistanceList) => {
   try {
     const res = await fetch(
       `http://localhost:3000/api/v1/events/visitors/${eventId}`,
@@ -14,7 +8,7 @@ export const updateAssistants = async (
     );
 
     if (!res.ok) {
-      throw new Error('Error al obtener asistentes');
+      throw new Error('Error al obtener visitantes');
     }
 
     const visitors = await res.json();
@@ -31,6 +25,6 @@ export const updateAssistants = async (
       : 'No hay asistentes confirmados.';
   } catch (error) {
     assistanceList.textContent = 'Error al cargar asistentes.';
-    console.error('Error en updateAssistants:', error);
+    console.error('Error al cargar asistentes:', error);
   }
 };
