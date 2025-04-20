@@ -65,11 +65,15 @@
 .assistance-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: var(--margin-xs) 0;
   gap: 8px;
 }
 
 .assistance-list {
+  border: 1px solid var(--button-background-primary-hover);
+  padding: var(--padding-xs) var(--padding-m);
+  border-radius: var(--border-radius-buttons);
   font-family: var(--font-family-text);
   font-size: clamp(0.9rem, 2vw, 1.1rem);
   color: var(--text-basic-dark);

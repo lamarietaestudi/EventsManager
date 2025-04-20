@@ -9,7 +9,11 @@ export const toggleAssistance = async (
   assistanceList
 ) => {
   assistanceCheck.addEventListener('change', async () => {
-    await updateAssistToEvents(assistanceCheck, eventId, user, token);
-    await updateVisitors(eventId, token, assistanceList);
+    try {
+      await updateAssistToEvents(assistanceCheck, eventId, user, token);
+      await updateVisitors(eventId, token, assistanceList);
+    } catch (error) {
+      assistanceCheck.checked = !assistanceCheck.checked;
+    }
   });
 };

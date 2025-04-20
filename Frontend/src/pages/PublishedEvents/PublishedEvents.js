@@ -3,6 +3,7 @@ import { CreateEvent } from '../CreateEvent/CreateEvent';
 import { createButton } from '../../components/Buttons/Buttons';
 import { printPublishedEvents } from '../../utils/printPublishedEvents';
 import { Loading } from '../../components/Loading/Loading';
+import { fetchAPI } from '../../utils/fetchAPI';
 
 export const PublishedEvents = async () => {
   const main = document.querySelector('main');
@@ -23,19 +24,12 @@ export const PublishedEvents = async () => {
   const removeLoader = Loading(main);
 
   try {
-    const res = await fetch('http://localhost:3000/api/v1/events/me/events', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!res.ok) {
-      console.error(`Error al obtener eventos publicados: ${res.status}`);
-      return;
-    }
-
-    const events = await res.json();
+    const events = await fetchAPI(
+      'http://localhost:3000/api/v1/events/me/events',
+      'GET',
+      null,
+      token
+    );
     printPublishedEvents(events, main);
   } finally {
     removeLoader();

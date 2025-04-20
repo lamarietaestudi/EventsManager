@@ -3,6 +3,7 @@ import { createForm } from '../../components/Forms/Forms';
 import { createButton } from '../../components/Buttons/Buttons';
 import { ConfirmMessage } from '../../components/ConfirmMessages/ConfirmMessages';
 import { Loading } from '../../components/Loading/Loading';
+import { fetchAPI } from '../../utils/fetchAPI';
 
 export const CreateEvent = () => {
   const main = document.querySelector('main');
@@ -78,32 +79,20 @@ export const CreateEvent = () => {
       const token = localStorage.getItem('token');
 
       try {
-        const res = await fetch('http://localhost:3000/api/v1/events', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: formData
-        });
+        await fetchAPI(
+          'http://localhost:3000/api/v1/events',
+          'POST',
+          formData,
+          token
+        );
 
-        if (res.ok) {
-          const message = ConfirmMessage('success', 'Evento creado con éxito.');
-          createEventContainer.appendChild(message);
-          form.reset();
-        } else {
-          const errorData = await res.json();
-          const message = ConfirmMessage(
-            'failed',
-            `Error al crear el evento: ${
-              errorData.message || 'Error desconocido'
-            }`
-          );
-          createEventContainer.appendChild(message);
-        }
+        const message = ConfirmMessage('success', 'Evento creado con éxito.');
+        createEventContainer.appendChild(message);
+        form.reset();
       } catch (error) {
         const message = ConfirmMessage(
           'failed',
-          'Error al intentar crear el evento.'
+          `${error.message || 'Error desconocido'}`
         );
         createEventContainer.appendChild(message);
       } finally {

@@ -5,6 +5,7 @@ import { createForm } from '../../components/Forms/Forms.js';
 import { createButton } from '../../components/Buttons/Buttons.js';
 import { ConfirmMessage } from '../../components/ConfirmMessages/ConfirmMessages.js';
 import { Loading } from '../../components/Loading/Loading.js';
+import { fetchAPI } from '../../utils/fetchAPI.js';
 
 export const LoginRegister = () => {
   const main = document.querySelector('main');
@@ -52,12 +53,6 @@ const Login = (formContainer) => {
 };
 
 const SubmitEvent = async (email, password, form) => {
-  const specifications = {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-    headers: { 'content-type': 'application/json' }
-  };
-
   const existingMessage = form.querySelector('.confirm-message');
   if (existingMessage) {
     existingMessage.remove();
@@ -66,20 +61,16 @@ const SubmitEvent = async (email, password, form) => {
   const removeLoader = Loading(document.querySelector('main'));
 
   try {
-    const res = await fetch(
+    const response = await fetchAPI(
       'http://localhost:3000/api/v1/users/auth',
-      specifications
+      'POST',
+      { email, password }
     );
-    const response = await res.json();
 
-    if (res.ok) {
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
-      Header();
-      Home();
-    } else {
-      throw new Error(response.message);
-    }
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('user', JSON.stringify(response.user));
+    Header();
+    Home();
   } catch (error) {
     const message = ConfirmMessage(
       'failed',

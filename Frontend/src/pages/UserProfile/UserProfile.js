@@ -5,6 +5,7 @@ import { createForm } from '../../components/Forms/Forms';
 import { createButton } from '../../components/Buttons/Buttons';
 import { ConfirmMessage } from '../../components/ConfirmMessages/ConfirmMessages';
 import { Loading } from '../../components/Loading/Loading';
+import { fetchAPI } from '../../utils/fetchAPI';
 
 export const UserProfile = async () => {
   const main = document.querySelector('main');
@@ -96,34 +97,26 @@ export const UserProfile = async () => {
       const removeLoader = Loading(profileContainer);
 
       try {
-        const res = await fetch(
+        const updatedUser = await fetchAPI(
           `http://localhost:3000/api/v1/users/${userId}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(updateData)
-          }
+          'PUT',
+          updateData,
+          token
         );
 
-        if (res.ok) {
-          const updatedUser = await res.json();
-          delete updatedUser.password;
-          localStorage.setItem('user', JSON.stringify(updatedUser));
-          const message = ConfirmMessage(
-            'success',
-            'Cambios guardados correctamente.'
-          );
-          profileContainer.appendChild(message);
-        } else {
-          const message = ConfirmMessage(
-            'failed',
-            'Error al guardar los cambios.'
-          );
-          profileContainer.appendChild(message);
-        }
+        delete updatedUser.password;
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        const message = ConfirmMessage(
+          'success',
+          'Cambios guardados correctamente.'
+        );
+        profileContainer.appendChild(message);
+      } catch (error) {
+        const message = ConfirmMessage(
+          'failed',
+          'Error al guardar los cambios.'
+        );
+        profileContainer.appendChild(message);
       } finally {
         removeLoader();
       }
@@ -153,22 +146,19 @@ export const UserProfile = async () => {
         const userId = user._id;
         const token = localStorage.getItem('token');
 
-        const res = await fetch(
-          `http://localhost:3000/api/v1/users/delete/${userId}`,
-          {
-            method: 'DELETE',
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
+        try {
+          await fetchAPI(
+            `http://localhost:3000/api/v1/users/delete/${userId}`,
+            'DELETE',
+            null,
+            token
+          );
 
-        if (res.ok) {
           localStorage.clear();
           alert('Cuenta eliminada con éxito');
           Header();
           Home();
-        } else {
+        } catch (error) {
           alert('Hubo un error al eliminar tu cuenta');
         }
       }

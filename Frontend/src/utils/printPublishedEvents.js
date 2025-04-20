@@ -1,6 +1,7 @@
 import { createButton } from '../components/Buttons/Buttons';
 import { ConfirmMessage } from '../components/ConfirmMessages/ConfirmMessages';
 import { Loading } from '../components/Loading/Loading';
+import { fetchAPI } from './fetchAPI';
 
 export const printPublishedEvents = (events, main) => {
   const eventsContainer = document.createElement('div');
@@ -56,7 +57,7 @@ export const printPublishedEvents = (events, main) => {
           const existingMessage = eventCard.querySelector('.confirm-message');
           if (existingMessage) existingMessage.remove();
         } else {
-          const removeLoader = await Loading(eventCard);
+          const removeLoader = Loading(eventCard);
           const token = localStorage.getItem('token');
           const eventId = event._id;
           const formData = new FormData();
@@ -71,45 +72,29 @@ export const printPublishedEvents = (events, main) => {
           }
 
           try {
-            const res = await fetch(
+            const updatedEvent = await fetchAPI(
               `http://localhost:3000/api/v1/events/${eventId}`,
-              {
-                method: 'PUT',
-                headers: {
-                  Authorization: `Bearer ${token}`
-                },
-                body: formData
-              }
+              'PUT',
+              formData,
+              token
             );
 
             const existingMessage = eventCard.querySelector('.confirm-message');
             if (existingMessage) existingMessage.remove();
 
-            if (res.ok) {
-              const updatedEvent = await res.json();
-              eventPoster.src = updatedEvent.poster;
-              const message = ConfirmMessage(
-                'success',
-                'Cambios guardados correctamente.'
-              );
-              eventCard.appendChild(message);
-              eventTitle.contentEditable = false;
-              eventLocation.contentEditable = false;
-              eventDescription.contentEditable = false;
-              eventTitle.classList.remove('editable');
-              eventLocation.classList.remove('editable');
-              eventDescription.classList.remove('editable');
-              fileInput?.remove();
-            } else {
-              const errorData = await res.json();
-              const message = ConfirmMessage(
-                'failed',
-                `Error al guardar los cambios: ${
-                  errorData.message || 'Error desconocido'
-                }`
-              );
-              eventCard.appendChild(message);
-            }
+            eventPoster.src = updatedEvent.poster;
+            const message = ConfirmMessage(
+              'success',
+              'Cambios guardados correctamente.'
+            );
+            eventCard.appendChild(message);
+            eventTitle.contentEditable = false;
+            eventLocation.contentEditable = false;
+            eventDescription.contentEditable = false;
+            eventTitle.classList.remove('editable');
+            eventLocation.classList.remove('editable');
+            eventDescription.classList.remove('editable');
+            fileInput?.remove();
           } catch (error) {
             const message = ConfirmMessage(
               'failed',
@@ -117,7 +102,7 @@ export const printPublishedEvents = (events, main) => {
             );
             eventCard.appendChild(message);
           } finally {
-            removeLoader;
+            removeLoader();
           }
           editSaveButton.textContent = 'Editar';
         }
@@ -132,41 +117,27 @@ export const printPublishedEvents = (events, main) => {
           '¿Estás seguro de que quieres eliminar este evento?'
         );
         if (confirmDelete) {
-          const removeLoader = await Loading(eventCard);
+          const removeLoader = Loading(eventCard);
           const token = localStorage.getItem('token');
           const eventId = event._id;
 
           try {
-            const res = await fetch(
+            await fetchAPI(
               `http://localhost:3000/api/v1/events/${eventId}`,
-              {
-                method: 'DELETE',
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
-              }
+              'DELETE',
+              null,
+              token
             );
 
             const existingMessage = eventCard.querySelector('.confirm-message');
             if (existingMessage) existingMessage.remove();
 
-            if (res.ok) {
-              eventCard.remove();
-              const message = ConfirmMessage(
-                'success',
-                'Evento eliminado con éxito.'
-              );
-              eventsContainer.appendChild(message);
-            } else {
-              const errorData = await res.json();
-              const message = ConfirmMessage(
-                'failed',
-                `Error al eliminar el evento: ${
-                  errorData.message || 'Error desconocido'
-                }`
-              );
-              eventCard.appendChild(message);
-            }
+            eventCard.remove();
+            const message = ConfirmMessage(
+              'success',
+              'Evento eliminado con éxito.'
+            );
+            eventsContainer.appendChild(message);
           } catch (error) {
             const message = ConfirmMessage(
               'failed',
@@ -174,7 +145,7 @@ export const printPublishedEvents = (events, main) => {
             );
             eventCard.appendChild(message);
           } finally {
-            removeLoader;
+            removeLoader();
           }
         }
       }

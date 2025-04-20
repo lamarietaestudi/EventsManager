@@ -8,7 +8,7 @@ const uploadCloudinary = () => {
       cloudinary: cloudinary,
       params: {
         folder: 'EventsManager/posters/',
-        allowed_formats: ['jpg', 'png', 'jpeg', 'gif', 'webp'],
+        allowed_formats: ['jpg', 'png', 'jpeg', 'gif', 'webp', 'avif'],
         resource_type: 'image'
       }
     });

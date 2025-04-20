@@ -1,31 +1,20 @@
+import { fetchAPI } from './fetchAPI';
+
 export const updateAssistToEvents = async (
   assistanceCheck,
   eventId,
   user,
   token
 ) => {
-  const previousState = assistanceCheck.checked;
   const method = assistanceCheck.checked ? 'PUT' : 'DELETE';
+  const url = `http://localhost:3000/api/v1/users/${
+    assistanceCheck.checked
+      ? `confirm-assistance/${user._id}/${eventId}`
+      : `cancel-assistance/${user._id}/${eventId}`
+  }`;
 
   try {
-    const res = await fetch(
-      `http://localhost:3000/api/v1/users/${
-        assistanceCheck.checked
-          ? `confirm-assistance/${user._id}/${eventId}`
-          : `cancel-assistance/${user._id}/${eventId}`
-      }`,
-      {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    if (!res.ok) {
-      throw new Error('Error al actualizar assistToEvents');
-    }
+    await fetchAPI(url, method, null, token);
 
     const updatedAssistToEvents = assistanceCheck.checked
       ? [...user.assistToEvents, eventId.toString()].filter(
@@ -38,7 +27,6 @@ export const updateAssistToEvents = async (
       JSON.stringify({ ...user, assistToEvents: updatedAssistToEvents })
     );
   } catch (error) {
-    console.error('Error en updateAssistToEvents:', error);
-    assistanceCheck.checked = previousState;
+    assistanceCheck.checked = !assistanceCheck.checked;
   }
 };
