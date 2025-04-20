@@ -35,11 +35,6 @@ export const toggleFavoriteEvent = async (eventId, likeEvent) => {
     if (res.ok) {
       const updatedUserFromServer = await res.json();
       localStorage.setItem('user', JSON.stringify(updatedUserFromServer));
-      console.log(
-        `Evento ${eventId} ${
-          isCurrentlyFavorite ? 'eliminado' : 'añadido'
-        } de favoritos.`
-      );
     } else {
       console.error(
         `Error al ${

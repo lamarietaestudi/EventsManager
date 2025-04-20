@@ -69,3 +69,33 @@
 .like-event:hover {
   transform: scale(1.1);
 }
+.assistance-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--margin-s);
+}
+
+.assistants-container {
+  font-size: var(--fontsize-text);
+  color: var(--text-basic-dark);
+  flex: 1;
+  text-align: left;
+}
+
+.confirmation-container {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.toggle-label {
+  font-size: var(--fontsize-text);
+  cursor: pointer;
+}
+
+.toggle-assistance {
+  margin-left: var(--margin-xs);
+}

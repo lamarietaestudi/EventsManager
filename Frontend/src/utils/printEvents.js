@@ -1,10 +1,18 @@
 import { toggleFavoriteEvent } from './toggleFavoriteEvent';
+import { toggleAssistance } from './toggleAssistance';
+import { updateAssistants } from './updateAssistants';
 
-export const printEvents = (events, main, favoriteEvents = []) => {
+export const printEvents = (
+  events,
+  main,
+  favoriteEvents = [],
+  assistToEvents = [],
+  token
+) => {
   const eventsContainer = document.createElement('div');
   eventsContainer.classList.add('events-container');
 
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = token ? JSON.parse(localStorage.getItem('user')) : null;
 
   events.forEach((event) => {
     const eventCard = document.createElement('div');
@@ -25,6 +33,8 @@ export const printEvents = (events, main, favoriteEvents = []) => {
     eventTitle.textContent = event.title;
     eventTitle.classList.add('event-title');
 
+    eventHead.append(eventTitle);
+
     if (user) {
       const likeEvent = document.createElement('img');
       likeEvent.src = favoriteEvents.includes(event._id)
@@ -35,20 +45,52 @@ export const printEvents = (events, main, favoriteEvents = []) => {
       likeEvent.addEventListener('click', () =>
         toggleFavoriteEvent(event._id, likeEvent)
       );
-      eventHead.append(eventTitle, likeEvent);
-    } else {
-      eventHead.append(eventTitle);
+      eventHead.append(likeEvent);
+
+      const assistanceContainer = document.createElement('div');
+      assistanceContainer.classList.add('assistance-container');
+
+      const assistanceList = document.createElement('div');
+      assistanceList.classList.add('assistance-list');
+
+      updateAssistants(event._id, token, user, assistToEvents, assistanceList);
+
+      const assistanceConfirmation = document.createElement('div');
+      assistanceConfirmation.classList.add('assistance-confirmation');
+
+      const assistanceLabel = document.createElement('label');
+      assistanceLabel.textContent = 'Confirmar asistencia';
+      assistanceLabel.classList.add('assistance-label');
+
+      const assistanceCheck = document.createElement('input');
+      assistanceCheck.type = 'checkbox';
+      assistanceCheck.checked = assistToEvents.includes(event._id.toString());
+      assistanceCheck.classList.add('assistance-check');
+
+      assistanceConfirmation.append(assistanceLabel, assistanceCheck);
+      assistanceContainer.append(assistanceList, assistanceConfirmation);
+
+      toggleAssistance(
+        assistanceCheck,
+        event._id,
+        user,
+        token,
+        assistToEvents,
+        assistanceList
+      );
+
+      eventInfo.append(assistanceContainer);
     }
+
     const eventLocation = document.createElement('p');
-    eventLocation.textContent = `${event.location}`;
+    eventLocation.textContent = event.location;
     eventLocation.classList.add('event-text');
 
     const eventDescription = document.createElement('p');
-    eventDescription.textContent = `${event.description}`;
+    eventDescription.textContent = event.description;
     eventDescription.classList.add('event-text');
 
     eventInfo.append(eventHead, eventLocation, eventDescription);
-
     eventCard.append(eventPoster, eventInfo);
     eventsContainer.appendChild(eventCard);
   });

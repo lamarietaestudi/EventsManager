@@ -64,6 +64,24 @@ const postEvent = async (req, res, next) => {
   }
 };
 
+const getMyVisitors = async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+
+    const event = await Event.findById(eventId).populate('visitors', 'email');
+    if (!event) {
+      return res.status(404).json({ message: 'Evento no encontrado' });
+    }
+
+    const validVisitors = event.visitors.filter((visitor) => visitor !== null);
+    return res.status(200).json(validVisitors);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error al obtener visitantes', error });
+  }
+};
+
 const updateEvent = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -141,6 +159,7 @@ module.exports = {
   getEvents,
   getEventsById,
   getMyEvents,
+  getMyVisitors,
   postEvent,
   updateEvent,
   deleteEvent

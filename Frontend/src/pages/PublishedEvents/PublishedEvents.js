@@ -20,7 +20,7 @@ export const PublishedEvents = async () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token = localStorage.getItem('token');
 
-  const removeLoader = Loading(document.querySelector('main'));
+  const removeLoader = Loading(main);
 
   try {
     const res = await fetch('http://localhost:3000/api/v1/events/me/events', {

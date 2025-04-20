@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Event = require('../models/event');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../../utils/jwt');
@@ -93,6 +94,8 @@ const deleteUser = async (req, res, next) => {
         .status(403)
         .json({ message: 'No tienes permisos para realizar esta operación' });
     }
+
+    await Event.updateMany({ visitors: id }, { $pull: { visitors: id } });
     await User.findByIdAndDelete(id);
     return res.status(200).json({ message: 'Usuario eliminado correctamente' });
   } catch (error) {
@@ -135,6 +138,88 @@ const removeFavoriteEvent = async (req, res, next) => {
     return res.status(400).json(error);
   }
 };
+const confirmAssistant = async (req, res, next) => {
+  try {
+    const { userId, eventId } = req.params;
+
+    const user = await User.findById(userId);
+    const event = await Event.findById(eventId);
+
+    if (!user || !event) {
+      return res
+        .status(404)
+        .json({ message: 'Usuario o evento no encontrado' });
+    }
+
+    if (!user.assistToEvents.includes(eventId)) {
+      user.assistToEvents.push(eventId);
+      await user.save();
+    }
+
+    if (!event.visitors.includes(userId)) {
+      event.visitors.push(userId);
+      await event.save();
+    }
+
+    return res
+      .status(200)
+      .json({ message: 'Asistencia confirmada', user, event });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error al confirmar asistencia', error });
+  }
+};
+
+const cancelAssistant = async (req, res, next) => {
+  try {
+    const { userId, eventId } = req.params;
+
+    const user = await User.findById(userId);
+    const event = await Event.findById(eventId);
+
+    if (!user || !event) {
+      return res
+        .status(404)
+        .json({ message: 'Usuario o evento no encontrado' });
+    }
+
+    user.assistToEvents = user.assistToEvents.filter(
+      (id) => id.toString() !== eventId
+    );
+    await user.save();
+
+    event.visitors = event.visitors.filter((id) => id.toString() !== userId);
+    await event.save();
+
+    return res
+      .status(200)
+      .json({ message: 'Asistencia cancelada', user, event });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error al cancelar asistencia', error });
+  }
+};
+const getMyConfirmations = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId).populate(
+      'assistToEvents',
+      'title location'
+    );
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    return res.status(200).json(user.assistToEvents);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error al obtener confirmaciones', error });
+  }
+};
 
 module.exports = {
   getUsers,
@@ -143,5 +228,8 @@ module.exports = {
   updateUser,
   deleteUser,
   addFavoriteEvent,
-  removeFavoriteEvent
+  removeFavoriteEvent,
+  confirmAssistant,
+  cancelAssistant,
+  getMyConfirmations
 };

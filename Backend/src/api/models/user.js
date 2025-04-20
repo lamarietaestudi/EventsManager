@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Types.ObjectId,
         ref: 'events'
       }
+    ],
+    assistToEvents: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'events'
+      }
     ]
   },
   { timestamps: true }
