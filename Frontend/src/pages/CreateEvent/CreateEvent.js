@@ -80,7 +80,7 @@ export const CreateEvent = () => {
 
       try {
         await fetchAPI(
-          'http://localhost:3000/api/v1/events',
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/events`,
           'POST',
           formData,
           token

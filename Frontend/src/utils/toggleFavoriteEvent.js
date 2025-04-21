@@ -5,7 +5,9 @@ export const toggleFavoriteEvent = async (eventId, likeEvent) => {
   const token = localStorage.getItem('token');
   const isCurrentlyFavorite = likeEvent.src.includes('like-full.png');
   const method = isCurrentlyFavorite ? 'DELETE' : 'PUT';
-  const url = `http://localhost:3000/api/v1/users/${user._id}/favorites/${eventId}`;
+  const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${
+    user._id
+  }/favorites/${eventId}`;
 
   if (!token) {
     console.error('Autenticación incorrecta.');

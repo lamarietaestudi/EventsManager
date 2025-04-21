@@ -7,7 +7,7 @@ export const updateAssistToEvents = async (
   token
 ) => {
   const method = assistanceCheck.checked ? 'PUT' : 'DELETE';
-  const url = `http://localhost:3000/api/v1/users/${
+  const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${
     assistanceCheck.checked
       ? `confirm-assistance/${user._id}/${eventId}`
       : `cancel-assistance/${user._id}/${eventId}`

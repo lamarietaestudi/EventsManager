@@ -73,7 +73,7 @@ export const printPublishedEvents = (events, main) => {
 
           try {
             const updatedEvent = await fetchAPI(
-              `http://localhost:3000/api/v1/events/${eventId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/v1/events/${eventId}`,
               'PUT',
               formData,
               token
@@ -123,7 +123,7 @@ export const printPublishedEvents = (events, main) => {
 
           try {
             await fetchAPI(
-              `http://localhost:3000/api/v1/events/${eventId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/v1/events/${eventId}`,
               'DELETE',
               null,
               token

@@ -25,7 +25,7 @@ export const PublishedEvents = async () => {
 
   try {
     const events = await fetchAPI(
-      'http://localhost:3000/api/v1/events/me/events',
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/events/me/events`,
       'GET',
       null,
       token

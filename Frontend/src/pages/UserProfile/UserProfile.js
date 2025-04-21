@@ -98,7 +98,7 @@ export const UserProfile = async () => {
 
       try {
         const updatedUser = await fetchAPI(
-          `http://localhost:3000/api/v1/users/${userId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${userId}`,
           'PUT',
           updateData,
           token
@@ -148,7 +148,9 @@ export const UserProfile = async () => {
 
         try {
           await fetchAPI(
-            `http://localhost:3000/api/v1/users/delete/${userId}`,
+            `${
+              import.meta.env.VITE_API_BASE_URL
+            }/api/v1/users/delete/${userId}`,
             'DELETE',
             null,
             token

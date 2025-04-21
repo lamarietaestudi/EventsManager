@@ -62,7 +62,7 @@ const SubmitEvent = async (email, password, form) => {
 
   try {
     const response = await fetchAPI(
-      'http://localhost:3000/api/v1/users/auth',
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/auth`,
       'POST',
       { email, password }
     );

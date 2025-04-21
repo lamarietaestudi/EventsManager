@@ -1,7 +1,9 @@
 import { fetchAPI } from './fetchAPI';
 
 export const updateVisitors = async (eventId, token, assistanceList) => {
-  const url = `http://localhost:3000/api/v1/events/visitors/${eventId}`;
+  const url = `${
+    import.meta.env.VITE_API_BASE_URL
+  }/api/v1/events/visitors/${eventId}`;
 
   try {
     const visitors = await fetchAPI(url, 'GET', null, token);

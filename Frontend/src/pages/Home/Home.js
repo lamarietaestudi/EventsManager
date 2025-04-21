@@ -9,7 +9,10 @@ export const Home = async () => {
   const removeLoader = Loading(main);
 
   try {
-    const events = await fetchAPI('http://localhost:3000/api/v1/events', 'GET');
+    const events = await fetchAPI(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/events`,
+      'GET'
+    );
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
 
