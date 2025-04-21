@@ -69,7 +69,6 @@
 .event-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   margin-bottom: var(--margin-xs);
 }
@@ -80,4 +79,25 @@
   align-items: center;
   margin-top: var(--margin-s);
   gap: var(--gap-s);
+}
+
+@media (max-width: 768px) {
+  .event-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-s);
+  }
+
+  .event-controls {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--gap-xs);
+  }
+
+  .edit-poster-input {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-align: center;
+  }
 }

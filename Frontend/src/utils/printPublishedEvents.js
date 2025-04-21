@@ -154,12 +154,12 @@ export const printPublishedEvents = (events, main) => {
     controlsContainer.append(editSaveButton, deleteButton);
 
     const eventLocation = document.createElement('p');
-    eventLocation.textContent = `${event.location}`;
+    eventLocation.textContent = event.location;
     eventLocation.classList.add('event-text', 'event-location');
     eventLocation.contentEditable = false;
 
     const eventDescription = document.createElement('p');
-    eventDescription.textContent = `${event.description}`;
+    eventDescription.textContent = event.description;
     eventDescription.classList.add('event-text', 'event-description');
     eventDescription.contentEditable = false;
 

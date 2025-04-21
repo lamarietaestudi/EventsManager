@@ -100,3 +100,10 @@
   height: 20px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .assistance-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

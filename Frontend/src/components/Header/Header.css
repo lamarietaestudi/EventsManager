@@ -18,10 +18,11 @@ nav {
 .navbar-link {
   text-decoration: none;
   color: var(--text-basic-light);
-  font-size: var(--font-size-nav-links);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
   font-weight: bold;
   transition: color var(--transition-speed);
   cursor: pointer;
+  text-align: center;
 }
 .navbar-link:hover {
   color: var(--text-event-title);

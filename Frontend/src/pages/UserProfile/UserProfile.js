@@ -54,7 +54,7 @@ export const UserProfile = async () => {
         li.dataset.id = event._id;
         const title = document.createElement('h3');
         title.textContent = event.title;
-        title.classList.add('event-title');
+        title.classList.add('event-title-profile');
         li.append(title);
         favoriteList.appendChild(li);
       });

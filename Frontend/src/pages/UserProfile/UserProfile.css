@@ -10,9 +10,10 @@
   max-width: 600px;
 }
 
-.event-title {
+.event-title-profile {
   font-size: var(--fontsize-text);
   color: var(--text-basic-dark);
+  padding-bottom: var(--padding-xs);
 }
 
 .form-input:disabled {
